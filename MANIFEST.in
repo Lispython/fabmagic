@@ -1,0 +1,16 @@
+include *.txt *.md *.rst Makefile *.py
+recursive-include fabmagic *.py
+recursive-exclude fabmagic *.pyo *.pyc
+recursive-include docs *.txt *.py *.rst *.md *
+recursive-include docs *
+recursive-include tests *.py
+recursive-include fabmagic/magic_templates/ *
+recursive-include examples/fabmagic_box_lucid32/ Vagrantfile
+recursive-include examples/fabmagic_box_precise32/ Vagrantfile
+recursive-exclude docs *.pyc
+recursive-exclude docs *.pyo
+recursive-exclude tests *.pyc
+recursive-exclude tests *.pyo
+recursive-exclude examples *.pyc
+recursive-exclude examples *.pyo
+

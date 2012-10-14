@@ -1,0 +1,4 @@
+.. module:: fabmagic
+
+.. include:: ../../ChangeLog
+

@@ -1,0 +1,24 @@
+#files to ignoring
+*.pyc
+*.pyo
+*.hg*
+*.kpf
+*.sock
+*.debug_config
+*.server_config
+*.vagrant
+#*#
+\#*\#
+.#*
+.rope*
+venv
+debug.log
+pip-log.txt
+*.log
+*.err
+*.db
+*.db-journal
+*.pid
+*.egg-info*
+dist/*
+_build/*
