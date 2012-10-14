@@ -27,6 +27,8 @@ or `pip`_::
 
     pip install fabmagic
 
+.. _easy_install: http://peak.telecommunity.com/DevCenter/EasyInstall
+.. _pip: http://pypi.python.org/pypi/pip
 
 TODO
 ----
