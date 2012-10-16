@@ -17,3 +17,7 @@ RECIPES_CONFIGS_KEY = 'magic_recipes'
 
 # recipe_config environment in recipe_file
 RECIPE_CONFIG_NAME = 'recipe_config'
+
+# templates path name
+TEMPLATES_DIR_NAME = 'magic_templates'
+TEMPLATE_POSTFIX = 'template'

@@ -15,7 +15,8 @@ Magic Recipes for Fabric
 __all__ = 'VERSION', 'VERSION_INFO',\
           'create_env', 'configure_env',\
           'configure_recipes', 'show_recipes',\
-          'env',
+          'env', 'magic_task', 'MagicTask',\
+          'get_template_path'
 
 
 __author__ = "Alex Lispython (alex@obout.ru)"
@@ -38,12 +39,16 @@ from fabric.main import load_tasks_from_module
 from fabric import colors
 
 from .core import show_recipes, configure_env, create_env
-from .utils import RecipeConfig, _throw_off_fabmagic
+from .utils import RecipeConfig, _throw_off_fabmagic, magic_task, MagicTask
 from .constants import RECIPES_CONFIGS_KEY, RECIPE_CONFIG_NAME
+from .templates import get_template_path
 
 assert show_recipes
 assert configure_env
 assert create_env
+assert magic_task
+assert MagicTask
+assert get_template_path
 
 
 if RECIPES_CONFIGS_KEY not in env:

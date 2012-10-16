@@ -17,7 +17,7 @@ import fabmagic.redis
 from fabric.state import env
 
 fabmagic.configure_recipes(
-    ("nginx", {"roles": ["web", "web1", "web2"]}),
+    ("nginx", {"test_key": "test_value"}),
     "monit",
     "redis",
     "deploy",
@@ -33,6 +33,7 @@ machine2 = {"host": "vagrant@33.33.33.11",
             "password": "vagrant"}
 
 
+@fabmagic.magic_task
 def production():
     """Reconfigure to production
     """
@@ -47,7 +48,16 @@ def production():
         machine2['host']: machine2['password']}
 
 
+@fabmagic.magic_task
 def stage():
     """Reconfigure to stage
     """
     production()
+
+
+@fabmagic.magic_task
+def show_env():
+    """Show environment
+    """
+    from pprint import pprint
+    pprint(env)

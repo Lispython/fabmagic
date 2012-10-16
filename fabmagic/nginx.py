@@ -31,7 +31,7 @@ recipe_config = RecipeConfig({
 def restart():
     """Restart nginx
     """
-
+    run("/etc/init.d/nginx restart")
     puts(colors.blue("{0} successfull restarted".format(__name__)))
 
 
@@ -39,6 +39,7 @@ def restart():
 def stop():
     """Stop nginx service
     """
+    run("/etc/init.d/nginx stop")
     puts(colors.blue("{0} successfull stoped".format(__name__)))
 
 
@@ -46,6 +47,7 @@ def stop():
 def start():
     """Start nginx service
     """
+    run("/etc/init.d/nginx start")
     puts(colors.blue("{0} successfull started".format(__name__)))
 
 
@@ -60,4 +62,15 @@ def reload():
 def status():
     """Nginx status
     """
+    print recipe_config
+    import ipdb; ipdb.set_trace()
     puts(colors.blue("{0} status".format(__name__)))
+    res = run("/etc/init.d/nginx status")
+    return res
+
+
+@magic_task
+def configure_host():
+    """Configure nginx host
+    """
+    pass

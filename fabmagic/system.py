@@ -11,12 +11,11 @@ System utilities
 :github: http://github.com/Lispython/fabmagic
 """
 
-from fabric.api import run
+from fabric.api import run, settings, hide
 
 from .utils import RecipeConfig, magic_task
 
-
-__all__ = 'uname', 'recipe_config'
+__all__ = 'hostname', 'uname', 'recipe_config'
 
 
 recipe_config = RecipeConfig({
@@ -27,7 +26,17 @@ recipe_config = RecipeConfig({
 def uname(keys=None):
     """Show system uname output
     """
-    cmd = "uname"
-    if keys:
-        cmd += " " + keys
-    run(cmd)
+    with settings(hide('running')):
+        cmd = "uname"
+        if keys:
+            cmd += " " + keys
+        run(cmd)
+
+
+@magic_task
+def hostname():
+    """Get host name
+    """
+
+    r = run('hostname --fqdn')
+    return r

@@ -18,5 +18,6 @@ fabmagic.configure_recipes(
     "nginx",
     "monit",
     "deploy",
-    "frameworks")
+    "frameworks",
+    "system")
 

@@ -17,16 +17,25 @@ from fabric import colors
 
 from .utils import magic_task, RecipeConfig
 
-__all__ = 'releases', 'cleanup', 'rollback'
+__all__ = 'releases', 'cleanup', 'rollback', 'recipe_config'
 
-recipe_config = RecipeConfig()
+recipe_config = RecipeConfig({
+    "project_path": "/var/www/{project_name}",
+    "releases": "/var/www/{project_name}/releases"})
+
+
+@magic_task
+def setup():
+    """Make project deployment structure
+    """
+    puts(colors.green("Setup project structure"))
 
 
 @magic_task
 def releases():
     """Show deployes releases
     """
-    puts(colors.green("Tring to show releases"))
+    puts(colors.green("Trying to show releases"))
     ## with cd(env.releases):
     ##     releases = run("ls")
     ##     current_release = run("cat {0}".format(_rel(env.current, "RELEASED")))

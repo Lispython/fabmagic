@@ -28,13 +28,23 @@ except ImportError:
 
 import fabmagic
 from fabric.state import env
+from fabric.main import load_fabfile
 from fabmagic.core import configure_env, create_env
+from fabmagic.constants import *
 from fabmagic.utils import _throw_off_fabmagic, get_recipe_roles, get_recipe_hosts,\
-     get_recipe_config, get_recipe_config_param
+     get_recipe_config, get_recipe_config_param, _rel
+from fabmagic.templates import get_template_path
 
 logger = logging.getLogger("fabmagic.test")
 
 env_copy = deepcopy(env)
+
+current_dir = __path__[0]
+fabfile_path = _rel(__path__[0], "fabfile.py")
+loading_result = load_fabfile(fabfile_path)
+env.real_fabfile = fabfile_path
+
+import ipdb; ipdb.set_trace()
 
 
 class BaseTestCase(unittest.TestCase):
@@ -51,8 +61,8 @@ class TestCoreTestCase(BaseTestCase):
     """Test core utils of Fabric Magic Recipes
     """
     def setUp(self):
-        self.config_file = os.path.join(os.path.dirname(__file__), ".config")
-        self.new_config_file = os.path.join(os.path.dirname(__file__), ".new_config")
+        self.config_file = _rel(os.path.dirname(__file__), ".config")
+        self.new_config_file = _rel(os.path.dirname(__file__), ".new_config")
 
         config_file = open(self.config_file, 'r')
         config = load(config_file.read(), Loader=Loader)
@@ -131,6 +141,10 @@ class TestCoreTestCase(BaseTestCase):
         self.assertEquals(_throw_off_fabmagic("fabmagic.some.path"), "some.path")
         self.assertEquals("some.path", "some.path")
 
+    def test_get_template_name(self):
+        self.assertEquals(get_template_path("nginx"), os.path.abspath(_rel(current_dir, TEMPLATES_DIR_NAME, "nginx")))
+        self.assertEquals(get_template_path("monit"), os.path.abspath(_rel(fabmagic.__path__[0], TEMPLATES_DIR_NAME, "monit")))
+
     def test_configure_recipes(self):
         from fabmagic import redis
         recipes = [("nginx", {"roles": ["web1", "web2"]}),
@@ -155,7 +169,7 @@ class TestCoreTestCase(BaseTestCase):
 
                 self.assertEquals(fabmagic.env.magic_recipes[_throw_off_fabmagic(recipe)],
                                   getattr(m, "recipe_config", fabmagic.utils.RecipeConfig()))
-        env = deepcopy(env_copy)
+        self.env = deepcopy(env_copy)
 
 
 def suite():
