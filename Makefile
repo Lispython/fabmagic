@@ -38,6 +38,8 @@ vms-destroy:
 	cd examples/fabmagic_box && vagrant destroy && cd ../../
 
 vms-prepare:
-	cd /tmp && curl http://files.vagrantup.com/lucid32.box http://files.vagrantup.com/precise32.box
+	cd /tmp
+	curl http://files.vagrantup.com/lucid32.box
+	curl http://files.vagrantup.com/precise32.box
 	vagrant add fabmagic_box_lucid32 /tmp/lucid32.box
 	vagrant add fabmagic_box_precise32 /tmp/precise32.box
