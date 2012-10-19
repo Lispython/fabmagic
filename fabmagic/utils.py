@@ -118,6 +118,7 @@ class MagicTask(WrappedCallableTask):
         :param env: :class:`~fabric.utils._AttributeDict` object with env
         :type env: `~fabric.utils._AttributeDict`
         """
+
         env = env or {'hosts': [], 'roles': [], 'exclude_hosts': []}
         roledefs = env.get('roledefs', {})
         # Command line per-task takes precedence over anything else.
@@ -142,6 +143,8 @@ class MagicTask(WrappedCallableTask):
         # return an empty list if no hosts have been set anywhere.
         env_vars = map(_get_list(env), "hosts roles exclude_hosts".split())
         env_vars.append(roledefs)
+
+
         return merge(*env_vars)
 
 

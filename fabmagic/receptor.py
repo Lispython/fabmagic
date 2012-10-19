@@ -37,6 +37,36 @@ def get_recipes_directory():
         return _rel(os.path.dirname(env.real_fabfile), 'recipes')
     abort(colors.red("You need specify recipes_path"))
 
+def get_recipes_list(directory):
+    """Get recipes list by given ``directory``
+
+    :param directory: recipes directory path
+    :return: list of recipes names
+    """
+    recipes_directory = get_recipes_directory()
+    return os.listdir(recipes_directory)
+
+
+def prepare_recipes_list(recipes):
+    """Prepare recipes list
+    Sort recipes by requirements
+
+    :param recipes: list of recipe names
+    :return: recipes prepared data
+    """
+    res = []
+    for recipe in recipes:
+        res.append((recipe, get_recipe_info(recipe)))
+
+    return res
+
+
+def prepare_recipe(name):
+    """Validate recipe before execution
+    """
+    recipe_def = get_recipe_info(name)
+    return recipe_def
+
 
 def get_recipe_path(name):
     """Get recipe path

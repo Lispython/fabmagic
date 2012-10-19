@@ -63,7 +63,6 @@ def status():
     """Nginx status
     """
     print recipe_config
-    import ipdb; ipdb.set_trace()
     puts(colors.blue("{0} status".format(__name__)))
     res = run("/etc/init.d/nginx status")
     return res

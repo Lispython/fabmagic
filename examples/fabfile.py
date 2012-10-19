@@ -15,11 +15,12 @@ import fabmagic
 import fabmagic.redis
 
 from fabric.state import env
+from fabric.api import task, run as remote_run
 
 fabmagic.configure_recipes(
     ("nginx", {"test_key": "test_value"}),
     "monit",
-    "recipes",
+    ("recipes", {"roles": ["system", "db"]}),
     "redis",
     "deploy",
     "frameworks.django",
@@ -33,8 +34,10 @@ machine1 = {"host": "vagrant@33.33.33.10",
 machine2 = {"host": "vagrant@33.33.33.11",
             "password": "vagrant"}
 
+# Configure recipes by machine roles and environment
 
-@fabmagic.magic_task
+
+@task
 def production():
     """Reconfigure to production
     """
@@ -49,14 +52,14 @@ def production():
         machine2['host']: machine2['password']}
 
 
-@fabmagic.magic_task
+@task
 def stage():
     """Reconfigure to stage
     """
     production()
 
 
-@fabmagic.magic_task
+@task
 def show_env():
     """Show environment
     """

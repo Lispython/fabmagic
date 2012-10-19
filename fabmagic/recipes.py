@@ -19,18 +19,20 @@ try:
 except ImportError:
     from yaml import Loader, Dumper
 
-from fabric.api import task
+from fabric.api import task, run as remote_run
 from fabric.state import env
 from fabric.utils import puts, abort, indent
 from fabric.context_managers import lcd
+from fabric.operations import require
 from fabric.contrib.console import confirm
 from fabric import colors
 
 from .constants import DEFAULT_INFO_SKIP_LIST
 from .utils import magic_task
-from .receptor import get_recipes_directory, get_recipe_path, get_recipe_template, get_recipe_info
+from .receptor import get_recipes_directory, get_recipe_path, get_recipe_template, get_recipe_info, \
+     prepare_recipes_list, get_recipes_list
 
-__all__ = "create", "delete", "show", "info"
+__all__ = "create", "delete", "show", "info", "run"
 
 
 def get_info_skip_list():
@@ -122,3 +124,20 @@ def show(recipe=None, i=False, a=None, nested=False):
 
     for d in os.listdir(recipes_path):
         info(d)
+
+
+@magic_task
+def run(recipes=None):
+    """Execute recipes on hosts
+    """
+    if recipes:
+        recipes_list = recipes.split()
+    else:
+        try:
+            recipes_list = env['recipes_list']
+        except IndexxError:
+            recipes_list = get_recipes_list()
+    puts(colors.blue("Execute [{0}] recipes".format(", ".join(recipes_list))))
+
+    prepared_recipes = prepare_recipes_list(recipes_list)
+    print(prepared_recipes)

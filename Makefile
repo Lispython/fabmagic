@@ -29,9 +29,10 @@ find-print:
 
 
 vms-start:
-	cd examples/fabmagic_box_lucid32 && vagrant up && cd ../../
-	cd examples/fabmagic_box_precise32 && vagrant up && cd ../../
+	cd examples/fabmagic_box && vagrant up && cd ../../
 
 vms-stop:
-	cd examples/fabmagic_box_lucid32 && vagrant halt && cd ../../
-	cd examples/fabmagic_box_precise32 && vagrant halt && cd ../../
+	cd examples/fabmagic_box && vagrant halt && cd ../../
+
+vms-destroy:
+	cd examples/fabmagic_box && vagrant destroy && cd ../../
