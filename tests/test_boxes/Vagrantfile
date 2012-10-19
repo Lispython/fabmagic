@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+
+Vagrant::Config.run do |config|
+
+  # Configure lucid32 machine
+  config.vm.define :box_lucid32 do |machine_config|
+    machine_config.vm.box = "fabmagic_box_lucid32"
+
+    # machine_config.vm.forward_port 22, 2222
+    #  config.vm.customize ["modifyvm", :id, "--memory", 1024]
+
+    machine_config.vm.network :hostonly, "10.8.8.8"
+    machine_config.vm.box_url = "http://files.vagrantup.com/lucid32.box"
+    machine_config.vm.host_name = "fabmagic-lucid32"
+  end
+
+  # Configure lucid32 machine
+  config.vm.define :box_precise32 do |machine_config|
+    machine_config.vm.box = "fabmagic_box_precise32"
+
+    # machine_config.vm.forward_port 22, 2223
+    #  config.vm.customize ["modifyvm", :id, "--memory", 1024]
+
+    machine_config.vm.network :hostonly, "10.8.8.9"
+    machine_config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+    machine_config.vm.host_name = "fabmagic-precise32"
+  end
+end

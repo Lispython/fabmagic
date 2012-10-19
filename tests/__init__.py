@@ -81,6 +81,7 @@ class ReceptorTestCase(unittest.TestCase):
 def ContextTestCase(self):
     """Test context managers
     """
+    pass
 
 
 class TestCoreTestCase(BaseTestCase):
