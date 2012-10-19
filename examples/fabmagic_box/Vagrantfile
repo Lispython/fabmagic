@@ -15,7 +15,7 @@ Vagrant::Config.run do |config|
   end
 
   # Configure lucid32 machine
-  config.vm.define :web do |machine_config|
+  config.vm.define :box_precise32 do |machine_config|
     machine_config.vm.box = "fabmagic_box_precise32"
 
     # machine_config.vm.forward_port 22, 2223

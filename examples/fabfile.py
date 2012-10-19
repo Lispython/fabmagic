@@ -28,10 +28,10 @@ fabmagic.configure_recipes(
     ("system", {"roles": ["system", "db"]})
     )
 
-machine1 = {"host": "vagrant@33.33.33.10",
+machine1 = {"host": "vagrant@10.8.8.8",
             "password": "vagrant"}
 
-machine2 = {"host": "vagrant@33.33.33.11",
+machine2 = {"host": "vagrant@10.8.8.9",
             "password": "vagrant"}
 
 # Configure recipes by machine roles and environment
