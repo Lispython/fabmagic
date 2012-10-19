@@ -18,7 +18,7 @@ from fabric.state import env
 from fabric.task_utils import merge
 from fabric.tasks import WrappedCallableTask, _get_list
 
-from .constants import RECIPES_CONFIGS_KEY
+from .constants import RECIPES_CONFIGS_KEY, NAME_LIB
 
 __all__ = 'get_templates_dir', '_rel', 'RecipeConfig', 'get_recipe_roles', \
           '_throw_off_fabmagic', 'magic_task', 'MagicTask'
@@ -97,8 +97,8 @@ def _throw_off_fabmagic(namespace):
     :type namespace: string, unicode
     """
     splited = namespace.split(".")
-    if splited[0] == 'fabmagic':
-        splited.remove('fabmagic')
+    if splited[0] == NAME_LIB:
+        splited.remove(NAME_LIB)
     return '.'.join(splited)
 
 

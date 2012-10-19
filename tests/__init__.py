@@ -34,6 +34,8 @@ from fabmagic.constants import *
 from fabmagic.utils import _throw_off_fabmagic, get_recipe_roles, get_recipe_hosts,\
      get_recipe_config, get_recipe_config_param, _rel
 from fabmagic.templates import get_template_path
+from fabmagic.receptor import get_recipe_info, execute_recipe, get_recipe_template,\
+     make_recipe_def_locals, get_recipe_def
 
 logger = logging.getLogger("fabmagic.test")
 
@@ -44,16 +46,40 @@ fabfile_path = _rel(__path__[0], "fabfile.py")
 loading_result = load_fabfile(fabfile_path)
 env.real_fabfile = fabfile_path
 
-import ipdb; ipdb.set_trace()
-
 
 class BaseTestCase(unittest.TestCase):
     """Custom Test Case for tests
     """
-
-
 class TestNginxTestCase(BaseTestCase):
     """ Test nginx config
+    """
+
+class ReceptorTestCase(unittest.TestCase):
+    """Test receptor module
+    """
+    def test_recipe_info(self):
+        recipe_info = get_recipe_info("nginx")
+        self.assertEquals(recipe_info['__author__'], "Alexandr Lispython")
+        self.assertEquals(recipe_info['__author_email__'], 'alex@obout.ru')
+        self.assertEquals(recipe_info['__maintainer__'], 'Alexandr Lispython')
+        self.assertEquals(recipe_info['__license__'], 'BSD')
+        self.assertEquals(recipe_info['__version_info__'], (0, 0, 7))
+        self.assertEquals(recipe_info['__version__'], '0.0.7')
+        self.assertEquals(recipe_info['__short_description__'], 'test short nginx recipe description')
+
+    def test_recipe_def(self):
+        recipe_name = 'nginx'
+        self.assertEquals(make_recipe_def_locals(recipe_name, get_recipe_def(recipe_name)),
+                          {"__file__": get_recipe_def(recipe_name),
+                           "__name__": recipe_name,
+                           "__description__": open(_rel(os.path.dirname(get_recipe_def(recipe_name)), "description")).read()})
+
+    def test_execute_recipe(self):
+        pass
+
+
+def ContextTestCase(self):
+    """Test context managers
     """
 
 
@@ -141,14 +167,15 @@ class TestCoreTestCase(BaseTestCase):
         self.assertEquals(_throw_off_fabmagic("fabmagic.some.path"), "some.path")
         self.assertEquals("some.path", "some.path")
 
-    def test_get_template_name(self):
-        self.assertEquals(get_template_path("nginx"), os.path.abspath(_rel(current_dir, TEMPLATES_DIR_NAME, "nginx")))
-        self.assertEquals(get_template_path("monit"), os.path.abspath(_rel(fabmagic.__path__[0], TEMPLATES_DIR_NAME, "monit")))
+    def test_recipe_template(self):
+        self.assertEquals(get_recipe_template(), os.path.abspath(_rel(fabmagic.__path__[0], TEMPLATES_DIR_NAME, 'template')))
+
 
     def test_configure_recipes(self):
         from fabmagic import redis
         recipes = [("nginx", {"roles": ["web1", "web2"]}),
                    "monit",
+                   "recipes",
                    "deploy",
                    "frameworks",
                    "frameworks.django",
@@ -174,7 +201,7 @@ class TestCoreTestCase(BaseTestCase):
 
 def suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestNginxTestCase))
+    suite.addTest(unittest.makeSuite(ReceptorTestCase))
     suite.addTest(unittest.makeSuite(BaseTestCase))
     return suite
 

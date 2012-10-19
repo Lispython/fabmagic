@@ -12,6 +12,8 @@ Magic Recipes environment constant
 :github: http://github.com/Lispython/fabmagic
 """
 
+NAME_LIB = 'fabmagic'
+
 # env key for recipes
 RECIPES_CONFIGS_KEY = 'magic_recipes'
 
@@ -20,4 +22,8 @@ RECIPE_CONFIG_NAME = 'recipe_config'
 
 # templates path name
 TEMPLATES_DIR_NAME = 'magic_templates'
-TEMPLATE_POSTFIX = 'template'
+
+
+# Default info skip list
+
+DEFAULT_INFO_SKIP_LIST = ['__description__', 'description', '__doc__', ]

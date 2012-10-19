@@ -19,6 +19,7 @@ from fabric.state import env
 fabmagic.configure_recipes(
     ("nginx", {"test_key": "test_value"}),
     "monit",
+    "recipes",
     "redis",
     "deploy",
     "frameworks.django",

@@ -14,7 +14,7 @@ Magic Recipes for Fabric
 
 __all__ = 'VERSION', 'VERSION_INFO',\
           'create_env', 'configure_env',\
-          'configure_recipes', 'show_recipes',\
+          'configure_recipes',\
           'env', 'magic_task', 'MagicTask',\
           'get_template_path'
 
@@ -25,7 +25,6 @@ __version_info__ = (0, 0, 1)
 __build__ = 0x000001
 __version__ = ".".join(map(str, __version_info__))
 __maintainer__ = "Alexandr Lispython (alex@obout.ru)"
-
 
 VERSION = __version__
 VERSION_INFO = __version_info__
@@ -38,12 +37,11 @@ from fabric.state import env, commands
 from fabric.main import load_tasks_from_module
 from fabric import colors
 
-from .core import show_recipes, configure_env, create_env
+from .core import configure_env, create_env
 from .utils import RecipeConfig, _throw_off_fabmagic, magic_task, MagicTask
-from .constants import RECIPES_CONFIGS_KEY, RECIPE_CONFIG_NAME
+from .constants import RECIPES_CONFIGS_KEY, RECIPE_CONFIG_NAME, NAME_LIB, DEFAULT_INFO_SKIP_LIST
 from .templates import get_template_path
 
-assert show_recipes
 assert configure_env
 assert create_env
 assert magic_task
@@ -122,7 +120,7 @@ def _configure_module(name, namespace=None, config_params={}):
             m = name
             name = m.__name__
         else:
-            m = import_module("fabmagic.{0}".format(name))
+            m = import_module("{0}.{1}".format(NAME_LIB, name))
     except Exception, e:
         abort("Can't import recipe {0}: {1}".format(name, e))
     docstring, new_style, classic, default = load_tasks_from_module(m)
@@ -176,5 +174,5 @@ def configure_recipes(*recipes):
             _configure_module(recipe, recipe)
         elif isinstance(recipe, ModuleType):
             _configure_module(recipe, recipe.__name__)
-
+    env['info_skip_list'] = DEFAULT_INFO_SKIP_LIST
     puts(colors.blue("Recipes successfull configured"))

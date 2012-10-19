@@ -25,21 +25,12 @@ from fabric import colors
 from .utils import _rel, RecipeConfig
 
 
-__all__ = 'configure_recipes', 'show_recipes', 'configure_env', \
+__all__ = 'configure_recipes', 'configure_env', \
           'create_env', 'recipe_config'
 
 
 recipe_config = RecipeConfig({
     "env_conf": _rel(os.path.curdir, ".config")})
-
-
-def show_recipes(nested=False):
-    """Show available recipes
-
-    :param nested: nested flag
-    :type nested: boolean
-    """
-    puts(colors.blue("Show Fabric Magic Recipes"))
 
 
 def configure_env(env_file=recipe_config.env_conf):
