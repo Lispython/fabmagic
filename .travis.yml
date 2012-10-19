@@ -17,8 +17,9 @@ script:
     - make travis
 
 before_script:
-    - sudo apt-get install virtualbox-4.1
-    - sudo apt-get install vagrant
+    - sudo apt-get install virtualbox
+#    - sudo apt-get install vagrant
+    - sudo gem install vagrant
     - make vms-start
 
 after_script:
