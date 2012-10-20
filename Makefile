@@ -40,5 +40,5 @@ vms-destroy:
 vms-prepare:
 	wget -P ~/ http://files.vagrantup.com/lucid32.box
 	wget -P ~/ http://files.vagrantup.com/precise32.box
-	vagrant box add fabmagic_box_lucid32 /tmp/lucid32.box
-	vagrant box add fabmagic_box_precise32 /tmp/precise32.box
+	vagrant box add fabmagic_box_lucid32 ~/lucid32.box
+	vagrant box add fabmagic_box_precise32 ~/precise32.box
