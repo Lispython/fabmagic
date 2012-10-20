@@ -18,6 +18,7 @@ script:
 
 before_script:
     - sudo apt-get install curl
+    - sudo apt-get install wget
     - sudo apt-get install virtualbox
 #    - sudo apt-get install vagrant
     - sudo gem install vagrant
