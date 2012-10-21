@@ -1,0 +1,61 @@
+#!/usr/bin/env python
+# -*- coding:  utf-8 -*-
+"""
+fabmagic.tests.cookbooks
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Test cookbooks module
+
+:copyright: (c) 2012 by Alexandr Lispython (alex@obout.ru).
+:license: BSD, see LICENSE for more details.
+:github: http://github.com/Lispython/fabmagic
+"""
+
+import unittest
+from .base import BaseTestCase
+
+__all__ = 'CookbookTestCase', 'ReceptorTestCase'
+
+class CookbookTestCase(BaseTestCase):
+    """Test cookbook functions
+    """
+    def test_cookbook_dir(self):
+        pass
+
+    def test_cookbook_recipe(self):
+        pass
+
+    def test_cookbook_info(self):
+        pass
+
+    def test_component_directory(self):
+        pass
+
+    def test_get_template(self):
+        pass
+
+
+
+
+class ReceptorTestCase(unittest.TestCase):
+    """Test receptor module
+    """
+    def test_recipe_info(self):
+        recipe_info = get_recipe_info("nginx")
+        self.assertEquals(recipe_info['__author__'], "Alexandr Lispython")
+        self.assertEquals(recipe_info['__author_email__'], 'alex@obout.ru')
+        self.assertEquals(recipe_info['__maintainer__'], 'Alexandr Lispython')
+        self.assertEquals(recipe_info['__license__'], 'BSD')
+        self.assertEquals(recipe_info['__version_info__'], (0, 0, 7))
+        self.assertEquals(recipe_info['__version__'], '0.0.7')
+        self.assertEquals(recipe_info['__short_description__'], 'test short nginx recipe description')
+
+    def test_recipe_def(self):
+        recipe_name = 'nginx'
+        self.assertEquals(make_recipe_def_locals(recipe_name, get_recipe_def(recipe_name)),
+                          {"__file__": get_recipe_def(recipe_name),
+                           "__name__": recipe_name,
+                           "__description__": open(_rel(os.path.dirname(get_recipe_def(recipe_name)), "description")).read()})
+
+    def test_execute_recipe(self):
+        pass

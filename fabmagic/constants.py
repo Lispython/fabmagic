@@ -25,5 +25,10 @@ TEMPLATES_DIR_NAME = 'magic_templates'
 
 
 # Default info skip list
-
 DEFAULT_INFO_SKIP_LIST = ['__description__', 'description', '__doc__', ]
+
+# Cookbooks path
+COOKBOOKS_NAME = 'cookbooks'
+COOKBOOKS_LIBRARY_NAME = 'cookbooks-library'
+ROLES_NAME = 'roles'
+ATTRIBUTES_PATH_NAME = 'attributes'

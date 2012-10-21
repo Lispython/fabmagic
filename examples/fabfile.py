@@ -20,7 +20,8 @@ from fabric.api import task, run as remote_run
 fabmagic.configure_recipes(
     ("nginx", {"test_key": "test_value"}),
     "monit",
-    ("recipes", {"roles": ["system", "db"]}),
+    ("cookbooks", {"roles": ["system", "db"]}),
+    "roles",
     "redis",
     "deploy",
     "frameworks.django",

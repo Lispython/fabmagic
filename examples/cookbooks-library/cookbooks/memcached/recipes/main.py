@@ -1,23 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-fabmagic.fabfile
-~~~~~~~~~~~~~~~~
+Recipe Name
+~~~~~~~~~~~
 
-Examples of Fabric Magic Recipes
+Recipe Description
+
+You need change this decsription
 
 :copyright: (c) 2012 by Alexandr Lispython (alex@obout.ru).
 :license: BSD, see LICENSE for more details.
 :github: http://github.com/Lispython/fabmagic
 """
-
-import fabmagic
-
-
-fabmagic.configure_recipes(
-    "nginx",
-    "monit",
-    "cookbooks",
-    "deploy",
-    "frameworks",
-    "system")

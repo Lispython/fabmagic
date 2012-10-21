@@ -1,0 +1,41 @@
+
+user {{ renv['user'] }};
+worker_processes  {{ renv['worker_processes'] }};
+{% if renv['daemon_disable'] %}
+   daemon off;
+{% endif %}
+error_log  {{ renv['error_log'] }};
+pid        {{ renv['pid'] }};
+
+events {
+  worker_connections  {{ renv['worker_connections'] }};
+}
+
+http {
+  include       {{ renv['dir'] }]/mime.types;
+  default_type  application/octet-stream;
+  {% if not renv['disable_access_log'] %}
+  access_log = {{ renv['log_dir'] }}/access.log;
+  {% endif %}
+
+  sendfile on;
+  tcp_nopush on;
+  tcp_nodelay on;
+
+  {% if renv['keepalive'] == "on" %}
+  keepalive_timeout  {{ renv['keepalive_timeout'] }};
+  {% end %}
+
+  gzip  {{ renv['gzip'] }};
+  {% if renv['gzip'] == "on" %}
+  gzip_http_version {{ renv['gzip_http_version'] }};
+  gzip_comp_level {{ renv['gzip_comp_level'] }};
+  gzip_proxied {{ renv['gzip_proxied'] }};
+  gzip_types {{ renv['gzip_types'] }}>;
+  {% endif %}
+
+  server_names_hash_bucket_size {{ renv['server_names_hash_bucket_size'] }};
+
+  include {{ renv['dir'] }}/conf.d/*.conf;
+  include {{ renv['dir'] }}/sites-enabled/*;
+}
