@@ -15,11 +15,11 @@ Recipes to deploy nginx
 from fabric import colors
 from fabric.utils import puts
 
-from .utils import RecipeConfig, magic_task
+from .utils import ModuleConfig, magic_task
 
-__all__ = 'fabmagic', 'restart', 'stop', 'start', 'create_config', 'recipe_config'
+__all__ = 'fabmagic', 'restart', 'stop', 'start', 'create_config', 'module_config'
 
-recipe_config = RecipeConfig({
+module_config = ModuleConfig({
     "roles": ['all']})
 
 @magic_task

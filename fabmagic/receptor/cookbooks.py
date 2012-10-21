@@ -70,6 +70,14 @@ def get_cookbook_recipe(cookbook, recipe="__init__"):
     return _rel(get_cookbook_dir(cookbook), 'recipes', recipe)
 
 
+def get_machine_info(host):
+    """Get all info about host
+    """
+    return {"platform": "ubuntu",
+            "cpu": {
+                "total": "none"}}
+
+
 def get_cookbook_attributes(name):
     """Get recipe attributes path
 
@@ -77,7 +85,7 @@ def get_cookbook_attributes(name):
     :rtype: string
     """
     cookbook_dir = get_cookbook_dir(name)
-    attributes_locals = {}
+    attributes_locals = {'system': get_machine_info('test')}
     if os.path.isdir(_rel(cookbook_dir, ATTRIBUTES_PATH_NAME)):
         # collect attributes from files
         for attr_file, namespace, in map(lambda i: (i, i.split('.')[0]),
@@ -87,7 +95,7 @@ def get_cookbook_attributes(name):
                 execfile(_rel(cookbook_dir, ATTRIBUTES_PATH_NAME, attr_file), {},
                          attributes_locals)
             else:
-                attributes_locals[namespace] = {}
+                attributes_locals[namespace] = {'system': attributes_locals['system']}
                 execfile(_rel(cookbook_dir, ATTRIBUTES_PATH_NAME, attr_file), {},
                          attributes_locals[namespace])
     else:

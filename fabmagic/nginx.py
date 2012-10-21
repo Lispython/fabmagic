@@ -17,12 +17,11 @@ from fabric.api import run
 from fabric import colors
 
 
-from .utils import RecipeConfig, magic_task
+from .utils import ModuleConfig, magic_task
 
 __all__ = 'restart', 'stop', 'start', 'reload', 'status', 'recipe_config'
 
-
-recipe_config = RecipeConfig({
+module_config = ModuleConfig({
     'conf': '/etc/nginx/sites-enabled/{project_name}.conf',
     'roles': ['web']})
 

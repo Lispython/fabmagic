@@ -15,10 +15,10 @@ Magic Recipes environment constant
 NAME_LIB = 'fabmagic'
 
 # env key for recipes
-RECIPES_CONFIGS_KEY = 'magic_recipes'
+MODULES_CONFIGS_KEY = 'magic_modules'
 
 # recipe_config environment in recipe_file
-RECIPE_CONFIG_NAME = 'recipe_config'
+MODULES_CONFIG_NAME = 'module_config'
 
 # templates path name
 TEMPLATES_DIR_NAME = 'magic_templates'

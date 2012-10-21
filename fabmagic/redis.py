@@ -15,9 +15,9 @@ Recipes to deploy nginx
 from fabric import colors
 from fabric.utils import puts
 
-from .utils import RecipeConfig, magic_task
+from .utils import ModuleConfig, magic_task
 
-recipe_config = RecipeConfig({
+module_config = ModuleConfig({
     "roles": ["key.db"]})
 
 @magic_task

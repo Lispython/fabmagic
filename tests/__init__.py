@@ -19,10 +19,8 @@ from .core import CoreTestCase
 
 def suite():
     suite = unittest.TestSuite()
-    ## suite.addTest(unittest.makeSuite(ReceptorTestCase))
-    ## suite.addTest(unittest.makeSuite(BaseTestCase))
     suite.addTest(unittest.makeSuite(CookbookTestCase))
-    ##suite.addTest(unittest.makeSuite(CoreTestCase))
+    suite.addTest(unittest.makeSuite(CoreTestCase))
     suite.addTest(unittest.makeSuite(RolesTestCase))
     return suite
 

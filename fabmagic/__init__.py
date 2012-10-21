@@ -14,7 +14,7 @@ Magic Recipes for Fabric
 
 __all__ = 'VERSION', 'VERSION_INFO',\
           'create_env', 'configure_env',\
-          'configure_recipes',\
+          'configure_modules',\
           'env', 'magic_task', 'MagicTask',\
           'get_template_path'
 
@@ -38,8 +38,8 @@ from fabric.main import load_tasks_from_module
 from fabric import colors
 
 from .core import configure_env, create_env
-from .utils import RecipeConfig, _throw_off_fabmagic, magic_task, MagicTask
-from .constants import RECIPES_CONFIGS_KEY, RECIPE_CONFIG_NAME, NAME_LIB, DEFAULT_INFO_SKIP_LIST
+from .utils import ModuleConfig, _throw_off_fabmagic, magic_task, MagicTask
+from .constants import MODULES_CONFIGS_KEY, MODULES_CONFIG_NAME, NAME_LIB, DEFAULT_INFO_SKIP_LIST
 from .templates import get_template_path
 
 assert configure_env
@@ -49,24 +49,24 @@ assert MagicTask
 assert get_template_path
 
 
-if RECIPES_CONFIGS_KEY not in env:
-    env[RECIPES_CONFIGS_KEY] = {}
+if MODULES_CONFIGS_KEY not in env:
+    env[MODULES_CONFIGS_KEY] = {}
 
 
-def _configure_recipe(m, name, config_params):
-    """Configure recipe module
+def _configure_module_config(m, name, config_params):
+    """Configure module module
 
-    :param m: recipe module
+    :param m: module module
     :type m: module
-    :param name: recipe name
+    :param name: module name
     :type name: string
-    :param config_params: recipe custom params
+    :param config_params: module custom params
     :type config_params: dict
     """
-    config = getattr(m, RECIPE_CONFIG_NAME, RecipeConfig())
+    config = getattr(m, MODULES_CONFIG_NAME, ModuleConfig())
     config.update(config_params)
     splited_name = _throw_off_fabmagic(name).split(".")
-    env[RECIPES_CONFIGS_KEY]['.'.join(splited_name)] = config
+    env[MODULES_CONFIGS_KEY]['.'.join(splited_name)] = config
     return env
 
 
@@ -127,7 +127,7 @@ def _configure_module(name, namespace=None, config_params={}):
 
     tasks = new_style if env.new_style_tasks else classic
 
-    _configure_recipe(m, _namespace_from(m), config_params)
+    _configure_module_config(m, _namespace_from(m), config_params)
     commands.update(_make_recipe_dict(tasks, _namespace_from(namespace)))
     puts("{0} recipe configured".format(name))
     return True
@@ -154,7 +154,7 @@ def _recipe_repr(recipe):
         abort('Invalid recipe "{0!r}" to configurate'.format(recipe))
 
 
-def configure_recipes(*recipes):
+def configure_modules(*recipes):
     """Configure Magic Recipes and import it's to fabfile namespace
 
     :param \*recipes: list of available modules, without fabmagic prefix

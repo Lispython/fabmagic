@@ -14,7 +14,7 @@ Examples of Fabric Magic Recipes
 import fabmagic
 
 
-fabmagic.configure_recipes(
+fabmagic.configure_modules(
     "nginx",
     "monit",
     "cookbooks",

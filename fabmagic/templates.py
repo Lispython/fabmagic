@@ -24,13 +24,13 @@ from fabric.state import env
 from fabric import colors
 
 from . import __path__ as fabmagic_path
-from .utils import _rel, RecipeConfig
+from .utils import _rel, ModuleConfig
 from .constants import TEMPLATES_DIR_NAME
 
-__all__ = 'recipe_config', 'get_template_path'
+__all__ = 'module_config', 'get_template_path'
 
 
-recipe_config = RecipeConfig({
+module_config = ModuleConfig({
     "env_conf": _rel(os.path.curdir, ".config")})
 
 

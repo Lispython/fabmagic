@@ -89,15 +89,15 @@ class CookbookTestCase(BaseTestCase):
 
         # TODO: chech attributes in node env
 
-        cookbook_attributes_postgres = get_cookbook_attributes('nginx')
-        self.assertEquals(cookbook_attributes_postgres['some_var'], "some value")
-        self.assertEquals(cookbook_attributes_postgres['another_var'], "another value")
+        cookbook_attributes_nginx = get_cookbook_attributes('nginx')
+        self.assertEquals(cookbook_attributes_nginx['some_var'], "some value")
+        self.assertEquals(cookbook_attributes_nginx['another_var'], "another value")
         for attr_file in map(lambda i: i.split(".")[0],
                              filter(lambda x: x.endswith(".py"),
-                                    os.listdir(self.rel(self.cookbooks_dir, 'postgres',
+                                    os.listdir(self.rel(self.cookbooks_dir, 'nginx',
                                                         ATTRIBUTES_PATH_NAME)))):
             if attr_file == '__init__': continue
-            self.assertTrue(attr_file in cookbook_attributes_postgres.keys())
+            self.assertTrue(attr_file in cookbook_attributes_nginx.keys())
 
 
     def test_cookbook_info(self):

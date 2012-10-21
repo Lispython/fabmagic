@@ -6,7 +6,7 @@ version = "1.0.12"
 url = "http://nginx.org/download/nginx-{0}.tar.gz".format(version)
 
 
-if platform in ["debian","ubuntu"]:
+if system['platform'] in ["debian","ubuntu"]:
     dir        = "/etc/nginx"
     log_dir    = "/var/log/nginx"
     user       = "www-data"
@@ -40,7 +40,7 @@ gzip_types        = [
 
 keepalive          = "on"
 keepalive_timeout  = 65
-worker_processes   = cpu['total']
+worker_processes   = system['cpu']['total']
 worker_connections = 2048
 server_names_hash_bucket_size = 64
 

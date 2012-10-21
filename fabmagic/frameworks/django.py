@@ -15,11 +15,11 @@ Magic Fabric Recipes for django webframework
 from fabric import colors
 from fabric.utils import puts
 
-from ..utils import RecipeConfig, magic_task
+from ..utils import ModuleConfig, magic_task
 
 __all__ = 'create_settings', 'syncdb',
 
-recipe_config = RecipeConfig({
+module_config = ModuleConfig({
     "roles": ["web"],
     })
 

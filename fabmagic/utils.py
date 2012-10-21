@@ -18,9 +18,10 @@ from fabric.state import env
 from fabric.task_utils import merge
 from fabric.tasks import WrappedCallableTask, _get_list
 
-from .constants import RECIPES_CONFIGS_KEY, NAME_LIB
+from .constants import MODULES_CONFIGS_KEY, NAME_LIB
 
-__all__ = 'get_templates_dir', '_rel', 'RecipeConfig', 'get_recipe_roles', \
+__all__ = 'get_templates_dir', '_rel', 'ModuleConfig', 'get_module_roles', \
+          'get_module_hosts', 'get_module_config_param', 'get_module_config',\
           '_throw_off_fabmagic', 'magic_task', 'MagicTask'
 
 
@@ -28,23 +29,23 @@ def _rel(*parts):
     return os.path.join(*parts)
 
 
-class RecipeConfig(_AttributeDict):
+class ModuleConfig(_AttributeDict):
     """Recipe config
     """
 
 
-def get_recipe_config(recipe):
+def get_module_config(recipe):
     """Get recipe config from environment
 
     :param recipe: recipe name
     :type recipe: string
     """
     recipe_key = _throw_off_fabmagic(recipe)
-    recipe_config = env[RECIPES_CONFIGS_KEY][recipe_key]
+    recipe_config = env[MODULES_CONFIGS_KEY][recipe_key]
     return recipe_config
 
 
-def get_recipe_config_param(recipe, param):
+def get_module_config_param(recipe, param):
     """Recipe config parameter
 
     :param recipe: recipe name
@@ -55,7 +56,7 @@ def get_recipe_config_param(recipe, param):
     :rtype: value
     """
     try:
-        recipe_config = get_recipe_config(recipe)
+        recipe_config = get_module_config(recipe)
         if isinstance(param, (str, unicode)):
             return recipe_config[param]
         elif isinstance(param, (list, tuple)):
@@ -63,12 +64,12 @@ def get_recipe_config_param(recipe, param):
             for key in param:
                 item = item[key]
             return item
-        abort("Invalid param [{0!r}] for get_recipe_config_param".format(param))
+        abort("Invalid param [{0!r}] for get_module_config_param".format(param))
     except (KeyError, AttributeError):
         return None
 
 
-def get_recipe_roles(recipe):
+def get_module_roles(recipe):
     """Get roles for `recipe`
 
     :param recipe: recipe to get roles
@@ -76,10 +77,10 @@ def get_recipe_roles(recipe):
     :return: list of roles
     :rtype: list
     """
-    return get_recipe_config_param(recipe, "roles") or []
+    return get_module_config_param(recipe, "roles") or []
 
 
-def get_recipe_hosts(recipe):
+def get_module_hosts(recipe):
     """Get hosts for ``recipe``
 
     :param recipe: recipe to get roles
@@ -87,7 +88,7 @@ def get_recipe_hosts(recipe):
     :return: list of roles
     :rtype: list
     """
-    return get_recipe_config_param(recipe, "hosts") or []
+    return get_module_config_param(recipe, "hosts") or []
 
 
 def _throw_off_fabmagic(namespace):
@@ -126,11 +127,11 @@ class MagicTask(WrappedCallableTask):
             return merge(arg_hosts, arg_roles, arg_exclude_hosts, roledefs)
 
         # Use recipe configured roles
-        recipe_roles = get_recipe_roles(self.wrapped.__module__)
-        recipe_hosts = get_recipe_hosts(self.wrapped.__module__)
+        module_roles = get_module_roles(self.wrapped.__module__)
+        module_hosts = get_module_hosts(self.wrapped.__module__)
 
-        if recipe_roles or recipe_hosts:
-            return merge(recipe_hosts, recipe_roles, arg_exclude_hosts, roledefs)
+        if module_roles or module_hosts:
+            return merge(module_hosts, module_roles, arg_exclude_hosts, roledefs)
 
         # Decorator-specific hosts/roles go next
         func_hosts = getattr(self, 'hosts', [])

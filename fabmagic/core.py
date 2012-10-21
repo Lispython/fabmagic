@@ -22,18 +22,18 @@ from fabric.utils import puts, abort
 from fabric.state import env
 from fabric import colors
 
-from .utils import _rel, RecipeConfig
+from .utils import _rel, ModuleConfig
 
 
 __all__ = 'configure_recipes', 'configure_env', \
-          'create_env', 'recipe_config'
+          'create_env', 'module_config'
 
 
-recipe_config = RecipeConfig({
+module_config = ModuleConfig({
     "env_conf": _rel(os.path.curdir, ".config")})
 
 
-def configure_env(env_file=recipe_config.env_conf):
+def configure_env(env_file=module_config.env_conf):
     """Configure environment from YAML file
 
     :param env_file: path to config file
@@ -52,7 +52,7 @@ def configure_env(env_file=recipe_config.env_conf):
     return env
 
 
-def create_env(config=recipe_config.env_conf):
+def create_env(config=module_config.env_conf):
     """Create default environment file
 
     :param config: config path string

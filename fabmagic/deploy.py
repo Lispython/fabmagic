@@ -15,11 +15,11 @@ Tasks to deploy
 from fabric.utils import puts
 from fabric import colors
 
-from .utils import magic_task, RecipeConfig
+from .utils import magic_task, ModuleConfig
 
-__all__ = 'releases', 'cleanup', 'rollback', 'recipe_config'
+__all__ = 'releases', 'cleanup', 'rollback', 'module_config'
 
-recipe_config = RecipeConfig({
+module_config = ModuleConfig({
     "project_path": "/var/www/{project_name}",
     "releases": "/var/www/{project_name}/releases"})
 

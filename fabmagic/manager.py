@@ -22,15 +22,14 @@ from fabric.utils import puts, abort
 from fabric.state import env
 from fabric import colors
 
-from .utils import _rel, RecipeConfig, magic_task
+from .utils import _rel, ModuleConfig, magic_task
 
 
 __all__ = "create_recipe",
 
 
-recipe_config = RecipeConfig({
+recipe_config = ModuleConfig({
     "env_conf": _rel(os.path.curdir, ".config")})
-
 
 
 @magic_task

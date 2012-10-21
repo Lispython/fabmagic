@@ -13,12 +13,12 @@ System utilities
 
 from fabric.api import run, settings, hide
 
-from .utils import RecipeConfig, magic_task
+from .utils import ModuleConfig, magic_task
 
-__all__ = 'hostname', 'uname', 'recipe_config'
+__all__ = 'hostname', 'uname', 'module_config'
 
 
-recipe_config = RecipeConfig({
+module_config = ModuleConfig({
     "roles": ["all"]})
 
 

@@ -17,7 +17,7 @@ import fabmagic.redis
 from fabric.state import env
 from fabric.api import task, run as remote_run
 
-fabmagic.configure_recipes(
+fabmagic.configure_modules(
     ("nginx", {"test_key": "test_value"}),
     "monit",
     ("cookbooks", {"roles": ["system", "db"]}),
